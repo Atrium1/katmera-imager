@@ -1,6 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Katmera Imager">
-  <rect width="128" height="128" rx="24" fill="#0B1F2A"/>
-  <circle cx="64" cy="52" r="28" fill="none" stroke="#3DDC97" stroke-width="8"/>
-  <rect x="40" y="78" width="48" height="28" rx="6" fill="#3DDC97"/>
-  <text x="64" y="98" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#0B1F2A">K</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Katmera">
+  <!-- Simplified mark approximating the gear/circuit K (placeholder vector; prefer PNGs in this folder) -->
+  <rect width="128" height="128" rx="24" fill="#ffffff"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- left gear arc (orange) -->
+    <path d="M28 40c-10 8-14 20-10 32 4 12 14 20 26 22" stroke="#f86000" stroke-width="10"/>
+    <circle cx="22" cy="52" r="4" fill="#f86000" stroke="none"/>
+    <circle cx="18" cy="72" r="4" fill="#f86000" stroke="none"/>
+    <!-- right gear segments (charcoal) -->
+    <path d="M88 36c12 6 18 18 16 30-2 14-12 24-26 28" stroke="#202830" stroke-width="10"/>
+    <circle cx="108" cy="56" r="4" fill="#202830" stroke="none"/>
+    <circle cx="104" cy="78" r="4" fill="#202830" stroke="none"/>
+    <!-- circuit K -->
+    <path d="M48 30v68M48 64l28-28M48 64l28 28" stroke="#f86000" stroke-width="8"/>
+    <circle cx="78" cy="34" r="5" fill="#f86000" stroke="none"/>
+    <circle cx="78" cy="94" r="5" fill="#f86000" stroke="none"/>
+  </g>
 </svg>

@@ -5,6 +5,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Layouts
 import "../qmlcomponents"
@@ -453,18 +454,37 @@ Item {
                     // Add right margin when scrollbar is visible to prevent overlap
                     anchors.rightMargin: (sidebarScroll.contentHeight > sidebarScroll.height ? Style.scrollBarWidth : 0)
                 
-                // Header
-                Text {
+                // Brand + header
+                Column {
                     id: sidebarHeader
-                    text: qsTr("Setup steps")
-                    font.pointSize: Style.fontSizeHeading
-                    font.family: Style.fontFamilyBold
-                    font.bold: true
-                    color: Style.sidebarTextOnInactiveColor
-                    Layout.fillWidth: true
-                    Layout.bottomMargin: Style.spacingSmall
-                    Accessible.role: Accessible.Heading
-                    Accessible.name: text
+                    width: parent.width
+                    spacing: Style.spacingSmall
+
+                    Image {
+                        id: sidebarLogo
+                        width: Math.min(parent.width, Style.scaled(168))
+                        height: Style.scaled(52)
+                        source: Qt.resolvedUrl("../icons/logo_sxs_imager.png")
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                        mipmap: true
+                        sourceSize: Qt.size(
+                            Math.round(width * Screen.devicePixelRatio),
+                            Math.round(height * Screen.devicePixelRatio))
+                        Accessible.role: Accessible.Graphic
+                        Accessible.name: qsTr("Katmera")
+                    }
+
+                    Text {
+                        width: parent.width
+                        text: qsTr("Setup steps")
+                        font.pointSize: Style.fontSizeHeading
+                        font.family: Style.fontFamilyBold
+                        font.bold: true
+                        color: Style.sidebarTextOnInactiveColor
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
+                    }
                 }
                 
                 // Step list

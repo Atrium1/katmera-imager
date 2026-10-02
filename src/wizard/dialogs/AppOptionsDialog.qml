@@ -286,7 +286,19 @@ BaseDialog {
         }
     }
 
-    // Version / attribution — always visible so Apache-2.0 upstream credit is shown
+    // Brand + version / attribution — always visible so Apache-2.0 upstream credit is shown
+    Image {
+        Layout.alignment: Qt.AlignHCenter
+        Layout.preferredWidth: Style.scaled(200)
+        Layout.preferredHeight: Style.scaled(62)
+        source: Qt.resolvedUrl("../../icons/logo_sxs_imager.png")
+        fillMode: Image.PreserveAspectFit
+        smooth: true
+        mipmap: true
+        Accessible.role: Accessible.Graphic
+        Accessible.name: qsTr("Katmera")
+    }
+
     Text {
         id: versionText
         text: qsTr("Version: %1 — based on Raspberry Pi Imager (Apache-2.0)").arg(ImageWriterSingleton.constantVersion())

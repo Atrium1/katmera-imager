@@ -6,6 +6,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Window
 import QtQuick.Layouts
 import "../qmlcomponents"
 import "components"
@@ -61,6 +62,23 @@ WizardStepBase {
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: Style.sectionPadding
             spacing: Style.stepContentSpacing
+
+            Image {
+                id: brandLogo
+                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: Style.scaled(280)
+                Layout.preferredHeight: Style.scaled(88)
+                Layout.bottomMargin: Style.spacingSmall
+                source: Qt.resolvedUrl("../icons/logo_sxs_imager.png")
+                fillMode: Image.PreserveAspectFit
+                smooth: true
+                mipmap: true
+                sourceSize: Qt.size(
+                    Math.round(Layout.preferredWidth * Screen.devicePixelRatio),
+                    Math.round(Layout.preferredHeight * Screen.devicePixelRatio))
+                Accessible.role: Accessible.Graphic
+                Accessible.name: qsTr("Katmera")
+            }
 
             WizardSectionContainer {
                 RowLayout {

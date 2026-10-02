@@ -1963,10 +1963,21 @@ QString ImageWriter::osListUrlForDisplay() const {
     return _repo.toString(QUrl::PreferLocalFile | QUrl::NormalizePathSegments);
 }
 
-/* Function to return current OS list URL (may be customized) */
+/* Function to return current OS list URL (may be customized).
+ * When a Katmera download token is set, append ?token= for private catalog unlock.
+ */
 QUrl ImageWriter::osListUrl() const
 {
-    return _repo;
+    QUrl url = _repo;
+    const QString token = _settings.value(QStringLiteral("downloadToken")).toString().trimmed();
+    if (!token.isEmpty() && (url.scheme() == QLatin1String("http") || url.scheme() == QLatin1String("https"))) {
+        QUrlQuery query(url);
+        if (!query.hasQueryItem(QStringLiteral("token"))) {
+            query.addQueryItem(QStringLiteral("token"), token);
+            url.setQuery(query);
+        }
+    }
+    return url;
 }
 
 /* Static version - for use without creating an instance */

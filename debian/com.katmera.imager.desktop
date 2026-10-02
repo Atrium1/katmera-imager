@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Katmera Imager
+Comment=Tool for writing Katmera Linux images to microSD cards
+Icon=katmera-imager
+Exec=/usr/bin/katmera-imager %u
+Categories=Utility;
+StartupNotify=false
+MimeType=x-scheme-handler/katmera-imager;application/vnd.katmera.imager-manifest+json;

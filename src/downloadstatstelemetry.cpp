@@ -64,6 +64,9 @@ void DownloadStatsTelemetry::run()
     if (!settings.value("telemetry", TELEMETRY_ENABLED_DEFAULT).toBool())
         return;
 
+    if (QByteArray(TELEMETRY_URL).isEmpty())
+        return;
+
     _c = curl_easy_init();
     if (!_c) {
         qDebug() << "Telemetry: failed to init curl";

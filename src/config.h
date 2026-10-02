@@ -4,23 +4,24 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  * Copyright (C) 2020-2025 Raspberry Pi Ltd
+ * Copyright (C) 2026 Katmera / Atrium
  */
 
 
-/* Repository URL */
-#define OSLIST_URL                              "https://downloads.raspberrypi.com/os_list_imagingutility_v4.json"
+/* Repository URL — Katmera Repository JSON V4 catalog */
+#define OSLIST_URL                              "https://downloads.katmera.com/imager/os_list_v4.json"
 
 /* Custom repository manifest file extension (without leading dot) */
-#define MANIFEST_EXTENSION                      "rpi-imager-manifest"
+#define MANIFEST_EXTENSION                      "katmera-imager-manifest"
 
 /* MIME type for manifest files */
-#define MANIFEST_MIME_TYPE                      "application/vnd.raspberrypi.imager-manifest+json"
+#define MANIFEST_MIME_TYPE                      "application/vnd.katmera.imager-manifest+json"
 
 /* Time synchronization URL (only used on linuxfb QPA platform, URL must be HTTP) */
-#define TIME_URL                                "http://downloads.raspberrypi.com/"
+#define TIME_URL                                "http://downloads.katmera.com/"
 
-/* Phone home the name of images downloaded for image popularity ranking */
-#define TELEMETRY_URL                           "https://rpi-imager-stats.raspberrypi.com/downloads"
+/* Telemetry disabled for Katmera builds (empty URL is a no-op) */
+#define TELEMETRY_URL                           ""
 
 /* Hash algorithm for verifying (uncompressed image) checksum */
 #define OSLIST_HASH_ALGORITHM                   QCryptographicHash::Sha256

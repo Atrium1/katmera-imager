@@ -39,7 +39,7 @@ ApplicationWindow {
     property bool isOffline: ImageWriterSingleton.isOsListUnavailable
     
     title: {
-        var baseTitle = qsTr("Raspberry Pi Imager %1").arg(ImageWriterSingleton.constantVersion())
+        var baseTitle = qsTr("Katmera Imager %1").arg(ImageWriterSingleton.constantVersion())
         if (isOffline) {
             baseTitle += " — " + qsTr("Offline")
         }

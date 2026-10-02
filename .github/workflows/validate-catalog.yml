@@ -1,0 +1,29 @@
+name: Validate catalog
+
+on:
+  push:
+    paths:
+      - "katmera/catalog/**"
+      - "katmera/scripts/validate-catalog.py"
+      - "doc/json-schema/**"
+      - ".github/workflows/validate-catalog.yml"
+  pull_request:
+    paths:
+      - "katmera/catalog/**"
+      - "katmera/scripts/validate-catalog.py"
+      - "doc/json-schema/**"
+      - ".github/workflows/validate-catalog.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install jsonschema
+        run: pip install jsonschema
+      - name: Validate Katmera Repository JSON V4
+        run: python3 katmera/scripts/validate-catalog.py

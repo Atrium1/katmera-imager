@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component type="desktop-application">
+  <id>com.katmera.imager</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+  <name>Katmera Imager</name>
+  <summary>Katmera Imaging utility for Nexus Hub microSD flashing</summary>
+  <description>
+    <p>
+      Katmera Imager writes Katmera Linux BSP images to microSD cards for
+      Nexus Hub System-on-Module combinations. It is based on Raspberry Pi
+      Imager (Apache-2.0).
+    </p>
+    <p>
+      Private post-purchase images are unlocked with a download token that
+      returns time-limited signed download URLs.
+    </p>
+  </description>
+  <launchable type="desktop-id">com.katmera.imager.desktop</launchable>
+  <url type="homepage">https://github.com/Atrium1/katmera-imager</url>
+  <provides>
+    <binary>katmera-imager</binary>
+  </provides>
+  <releases>
+    <release version="@IMAGER_VERSION_STR@" />
+  </releases>
+  <content_rating type="oars-1.1">
+  </content_rating>
+</component>

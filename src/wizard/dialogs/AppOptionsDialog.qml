@@ -75,11 +75,13 @@ BaseDialog {
                 items.push(secureBootKeyButton.focusItem)
             items.push(chkConnectOrg.focusItem)
             items.push(clearSettingsButton.focusItem)
-            // Telemetry pill (and its help link) sit at the bottom — see the
-            // pill's own placement comment below.
-            items.push(chkTelemetry.focusItem)
-            if (chkTelemetry.helpLinkItem && chkTelemetry.helpLinkItem.visible)
-                items.push(chkTelemetry.helpLinkItem)
+            items.push(fieldDownloadToken)
+            // Telemetry pill is hidden in Katmera builds but kept for ABI/settings compatibility.
+            if (chkTelemetry.visible) {
+                items.push(chkTelemetry.focusItem)
+                if (chkTelemetry.helpLinkItem && chkTelemetry.helpLinkItem.visible)
+                    items.push(chkTelemetry.helpLinkItem)
+            }
             return items
         }, 1)
         registerFocusGroup("buttons", function(){ 
@@ -167,7 +169,7 @@ BaseDialog {
                 id: editRepoButton
                 text: qsTr("Content Repository")
                 btnText: qsTr("Edit")
-                accessibleDescription: qsTr("Change the source of operating system images between official Raspberry Pi repository and custom sources")
+                accessibleDescription: qsTr("Change the source of operating system images between the Katmera repository and custom sources")
                 Layout.fillWidth: true
                 // Disable while write is in progress to prevent changing source during write
                 enabled: ImageWriterSingleton.writeState === ImageWriterSingleton.Idle ||
@@ -269,12 +271,45 @@ BaseDialog {
             ImOptionPill {
                 id: chkTelemetry
                 text: qsTr("Enable anonymous statistics (telemetry)")
-                accessibleDescription: qsTr("Send anonymous usage statistics to help improve Raspberry Pi Imager")
+                accessibleDescription: qsTr("Send anonymous usage statistics (disabled by default in Katmera Imager)")
                 helpLabel: ImageWriterSingleton.isEmbeddedMode() ? "" : qsTr("What is this?")
-                helpUrl: ImageWriterSingleton.isEmbeddedMode() ? "" : "https://github.com/raspberrypi/rpi-imager?tab=readme-ov-file#anonymous-metrics-telemetry"
+                helpUrl: ImageWriterSingleton.isEmbeddedMode() ? "" : "https://github.com/Atrium1/katmera-imager#telemetry"
                 Layout.fillWidth: true
+                visible: false
                 Component.onCompleted: {
                     focusItem.activeFocusOnTab = true
+                }
+            }
+
+            ColumnLayout {
+                id: downloadTokenRow
+                Layout.fillWidth: true
+                spacing: Style.spacingSmall
+
+                Text {
+                    Layout.fillWidth: true
+                    text: qsTr("Download token")
+                    font.pointSize: Style.fontSizeFormLabel
+                    font.family: Style.fontFamily
+                    color: Style.formLabelColor
+                }
+                Text {
+                    Layout.fillWidth: true
+                    wrapMode: Text.WordWrap
+                    font.pointSize: Style.fontSizeCaption
+                    font.family: Style.fontFamily
+                    color: Style.textDescriptionColor
+                    text: qsTr("Enter the post-purchase download token to unlock private Katmera BSP images. The catalog is requested with ?token=… and returns signed download URLs.")
+                }
+                ImTextField {
+                    id: fieldDownloadToken
+                    Layout.fillWidth: true
+                    echoMode: TextInput.Password
+                    placeholderText: qsTr("Order / download token")
+                    font.pointSize: Style.fontSizeInput
+                    activeFocusOnTab: true
+                    Accessible.name: qsTr("Download token")
+                    Accessible.description: qsTr("Post-purchase token used to unlock private image downloads")
                 }
             }
         }
@@ -283,7 +318,7 @@ BaseDialog {
     // Version display - only shown when window has no decorations (no title bar)
     Text {
         id: versionText
-        text: qsTr("Version: %1").arg(ImageWriterSingleton.constantVersion())
+        text: qsTr("Version: %1 — based on Raspberry Pi Imager (Apache-2.0)").arg(ImageWriterSingleton.constantVersion())
         font.pointSize: Style.fontSizeCaption
         font.family: Style.fontFamily
         color: Style.textDescriptionColor
@@ -325,7 +360,7 @@ BaseDialog {
             ImButtonRed {
                 id: saveButton
                 text: qsTr("Save")
-                accessibleDescription: qsTr("Save the selected options and apply them to Raspberry Pi Imager")
+                accessibleDescription: qsTr("Save the selected options and apply them to Katmera Imager")
                 Layout.minimumWidth: Style.buttonWidthMinimum
                 activeFocusOnTab: true
                 onClicked: {
@@ -387,6 +422,7 @@ BaseDialog {
         chkBeep.checked = ImageWriterSingleton.getBoolSetting("beep") && ImageWriterSingleton.isBeepAvailable();
         chkEject.checked = ImageWriterSingleton.getBoolSetting("eject");
         chkTelemetry.checked = ImageWriterSingleton.getBoolSetting("telemetry");
+        fieldDownloadToken.text = ImageWriterSingleton.getStringSetting("downloadToken");
         // Do not load from QSettings; keep ephemeral
         chkDisableWarnings.checked = popup.wizardContainer ? popup.wizardContainer.disableWarnings : false;
         // Load secure boot RSA key path
@@ -434,6 +470,20 @@ BaseDialog {
         ImageWriterSingleton.setSetting("beep", chkBeep.checked && ImageWriterSingleton.isBeepAvailable());
         ImageWriterSingleton.setSetting("eject", chkEject.checked);
         ImageWriterSingleton.setSetting("telemetry", chkTelemetry.checked);
+        var previousToken = ImageWriterSingleton.getStringSetting("downloadToken");
+        var newToken = fieldDownloadToken.value !== undefined ? fieldDownloadToken.value : fieldDownloadToken.text;
+        newToken = (newToken || "").trim();
+        ImageWriterSingleton.setSetting("downloadToken", newToken);
+        if (previousToken !== newToken) {
+            // Re-fetch catalog so signed image URLs match the new token
+            if (ImageWriterSingleton.customRepo()) {
+                ImageWriterSingleton.refreshOsListFrom(ImageWriterSingleton.osListUrlForDisplay())
+            } else {
+                ImageWriterSingleton.refreshOsListFromDefaultUrl()
+            }
+            if (popup.wizardContainer)
+                popup.wizardContainer.resetWizard()
+        }
         ImageWriterSingleton.setSetting("secureboot_rsa_key", rsaKeyPath.text);
         // Feature flag only — the stored organisation API key is
         // kept across toggles.  Use the Clear action on the Connect

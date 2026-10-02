@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  catalog:
+    name: Catalog schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema
+      - run: python3 katmera/scripts/validate-catalog.py
+
+  # Full GUI packaging requires Qt 6.9+ toolchains, code signing secrets, and
+  # (for macOS) notarization. These jobs document the intended release path and
+  # run a lightweight source sanity check until runners with Qt are provisioned.
+
+  linux-source-sanity:
+    name: Linux source sanity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Check required rebrand files
+        run: |
+          set -euo pipefail
+          grep -q 'katmera-imager' src/CMakeLists.txt
+          grep -q 'downloads.katmera.com/imager/os_list_v4.json' src/config.h
+          grep -q 'TELEMETRY_URL' src/config.h
+          grep -q 'Katmera Imager' src/main.cpp
+          test -f debian/com.katmera.imager.desktop
+          test -f debian/com.katmera.imager.metainfo.xml.in
+          test -f katmera/NOTICE
+          test -f katmera/docs/DOWNLOAD_API.md
+          test -f katmera/docs/PHASE2.md
+          echo "ok: rebrand + overlay sanity"
+
+  release-notes:
+    name: Release checklist
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print release packaging expectations
+        run: |
+          cat <<'EOF'
+          Tag-triggered packaging (run on signed builders):
+            Windows: cmake -S src -B build -DENABLE_INNO_INSTALLER=ON -DENABLE_TELEMETRY=OFF
+                     → Katmera-Imager-Setup-<ver>.exe
+            macOS:   cmake -S src -B build -DIMAGER_SIGNED_APP=ON -DENABLE_TELEMETRY=OFF
+                     → Katmera-Imager-<ver>.dmg
+            Linux:   produce katmera-imager_<ver>_amd64.deb via debian/ pipeline
+          See katmera/docs/RELEASE.md
+          EOF

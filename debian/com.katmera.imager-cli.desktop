@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Katmera Imager (CLI)
+Comment=CLI tool for writing Katmera Linux images to microSD cards
+Icon=katmera-imager
+Exec=/usr/bin/katmera-imager-cli
+Categories=Utility;
+NoDisplay=true
+StartupNotify=false

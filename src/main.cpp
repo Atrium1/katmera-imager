@@ -234,9 +234,9 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    app.setOrganizationName("Raspberry Pi");
-    app.setOrganizationDomain("raspberrypi.com");
-    app.setApplicationName("Raspberry Pi Imager");
+    app.setOrganizationName("Katmera");
+    app.setOrganizationDomain("katmera.com");
+    app.setApplicationName("Katmera Imager");
     app.setApplicationVersion(ImageWriter::staticVersion());
     app.setWindowIcon(QIcon(":/icons/rpi-imager.ico"));
 

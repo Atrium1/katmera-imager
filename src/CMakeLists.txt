@@ -5,7 +5,7 @@ include(cmake/GeneratedResource.cmake)
 
 cmake_minimum_required(VERSION 3.22)
 OPTION (ENABLE_CHECK_VERSION "Check for version updates" ON)
-OPTION (ENABLE_TELEMETRY "Enable sending telemetry" ON)
+OPTION (ENABLE_TELEMETRY "Enable sending telemetry" OFF)
 OPTION (BUILD_EMBEDDED "Build for Embedded Imager" OFF)
 OPTION (BUILD_CLI_ONLY "Build CLI-only version without GUI components" OFF)
 
@@ -26,7 +26,7 @@ endif()
 
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "Which macOS architectures to build for")
 
-project(rpi-imager LANGUAGES CXX C)
+project(katmera-imager LANGUAGES CXX C)
 
 find_package(Git QUIET)
 
@@ -62,7 +62,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # One place to define the Windows callback IPC port
-set(IMAGER_CALLBACK_PORT "49629" CACHE STRING "TCP port for rpi-imager callback relay on Windows")
+set(IMAGER_CALLBACK_PORT "49629" CACHE STRING "TCP port for katmera-imager callback relay on Windows")
 
 # Apply optimization flags globally to all targets (including bundled dependencies)
 if(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo" OR CMAKE_BUILD_TYPE STREQUAL "MinSizeRel")

@@ -92,8 +92,8 @@ BaseDialog {
 
             ImRadioButton {
                 id: radioOfficial
-                text: "Raspberry Pi (default)"
-                accessibleDescription: qsTr("Use the official Raspberry Pi operating system repository")
+                text: "Katmera (default)"
+                accessibleDescription: qsTr("Use the official Katmera operating system repository")
                 checked: true
                 ButtonGroup.group: repoGroup
                 Layout.fillWidth: true  // Enable text wrapping for long translations

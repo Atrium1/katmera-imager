@@ -1,37 +1,30 @@
-# Phase 1 — Katmera Imager MVP
+# Phase 1 — foundation (M0–M2 stubs)
 
-## Scope
+## Scope (this milestone)
 
-- Host OS: Windows, macOS, Linux
-- Storage: microSD / USB mass-storage only
-- Hardware: Nexus Hub only
-- Combos:
-  - `nexus-hub` + `octapower-3566-ai` → device tag `nexus-hub-octapower-3566-ai`
-  - `nexus-hub` + `omnicore-1126b` → device tag `nexus-hub-omnicore-1126b`
+- Fork rpi-imager **v2.0.11.1**, Katmera branding, EN UI
+- microSD only; Nexus Hub + 3566 AI / 1126B device tags
+- Catalog **stubs** (“image not published yet”)
+- Test write path via **Use custom**
+- Unsigned builds only
 
-## Out of scope
+## Explicitly deferred
 
-- Internal eMMC / Maskrom / rkdeveloptool (see PHASE2.md)
-- Nexus Base, Vision Kit, other SoMs
-- Building BSP images
+- M3: download token + signed CDN URLs
+- M6: signed/notarized installers
+- Phase 2: eMMC / rkdeveloptool
+- Website / wiki (`web_katmera`)
 
-## Private downloads
+## Device tags
 
-See [DOWNLOAD_API.md](./DOWNLOAD_API.md). Users enter a post-purchase
-download token in App Options. The app requests the catalog with
-`?token=…`; the server returns Repository JSON V4 with short-lived signed
-image URLs.
+- `nexus-hub-octapower-3566-ai`
+- `nexus-hub-omnicore-1126b`
 
-## QA matrix
+## Definition of Done (foundation)
 
-See [QA_MATRIX.md](./QA_MATRIX.md).
-
-## Definition of Done
-
-- [x] Fork of rpi-imager v2.0.11.1 with Apache-2.0 attribution
-- [x] Branded Katmera Imager naming / IDs
-- [x] Catalog for Hub+3566 and Hub+1126B
-- [x] Token → signed-URL unlock path in app + API contract
-- [ ] Installers published for Win/macOS/Linux
-- [ ] Hardware lab verifies Hub boots both SoMs from flashed SD
-- [x] eMMC deferred to Phase 2
+- [x] Upstream import + NOTICE
+- [x] Katmera naming / telemetry off
+- [x] Stub V4 catalog for both Hub combos
+- [x] Docs for build + Use custom testing
+- [ ] First unsigned binary built on a Qt 6.9 machine
+- [ ] Hardware QA when real images exist

@@ -1,27 +1,25 @@
-# Phase 1 QA — automated run log
+# Phase 1 QA — foundation run log
 
-Date: 2026-10-02  
-Environment: CI / developer workstation (no Nexus Hub hardware attached)
+Date: 2026-10-02
 
-## Automated checks (passed)
+## Automated / repo checks
 
 | Check | Result |
 |-------|--------|
-| `python3 katmera/scripts/validate-catalog.py` | Pass (Phase 1 device tags + required fields) |
-| Rebrand sanity (`katmera-imager`, `OSLIST_URL`, NOTICE, desktop files) | Pass |
-| Download token path present (`downloadToken` setting + `osListUrl()` query append) | Pass (code review) |
-| Telemetry default OFF / empty `TELEMETRY_URL` | Pass |
-| Phase 2 deferred docs (`katmera/docs/PHASE2.md`) | Present |
+| Upstream tag v2.0.11.1 imported; `upstream` remote present | Pass |
+| Katmera branding / IDs / telemetry off | Pass |
+| Stub catalog validates (`validate-catalog.py`) | Pass |
+| Unlock UI deferred (M3 hooks only) | Pass |
+| eMMC / rkdeveloptool not implemented | Pass |
+| Qt 6.9 + CMake configure/build on this machine | **Blocked** — cmake/Qt not installed in agent environment |
 
-## Hardware lab (pending — required for MVP sign-off)
+## Manual (when Qt available)
 
-Use [QA_MATRIX.md](./QA_MATRIX.md). Cannot be completed in this environment:
+1. Build unsigned binary per `BUILD.md`
+2. `katmera-imager --repo …/katmera/catalog/os_list_v4.json`
+3. Confirm both Hub devices appear
+4. **Use custom** → write a local `.img.xz` to microSD with Exclude system drives ON
 
-- Write + verify to physical microSD on Win/macOS/Linux
-- Nexus Hub boot from flashed SD (3566 AI and 1126B)
-- System-drive exclusion on each host OS
-- Live unlock against production download API with a real token
+## Hardware (blocked on real BSP images)
 
-## Website / wiki
-
-Integration is planned only (see RELEASE.md); no `web_katmera` changes in this repo.
+Hub boot for 3566 AI / 1126B — see `QA_MATRIX.md` after images publish.

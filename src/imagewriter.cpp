@@ -1964,20 +1964,15 @@ QString ImageWriter::osListUrlForDisplay() const {
 }
 
 /* Function to return current OS list URL (may be customized).
- * When a Katmera download token is set, append ?token= for private catalog unlock.
+ *
+ * M3 hook (not implemented): when a post-purchase download token is stored,
+ * append ?token= so the unlock API can return a V4 catalog with short-lived
+ * signed CDN image URLs. See katmera/docs/DOWNLOAD_API.md.
+ * Phase 1 foundation uses public/stub catalog + "Use custom" for SD testing.
  */
 QUrl ImageWriter::osListUrl() const
 {
-    QUrl url = _repo;
-    const QString token = _settings.value(QStringLiteral("downloadToken")).toString().trimmed();
-    if (!token.isEmpty() && (url.scheme() == QLatin1String("http") || url.scheme() == QLatin1String("https"))) {
-        QUrlQuery query(url);
-        if (!query.hasQueryItem(QStringLiteral("token"))) {
-            query.addQueryItem(QStringLiteral("token"), token);
-            url.setQuery(query);
-        }
-    }
-    return url;
+    return _repo;
 }
 
 /* Static version - for use without creating an instance */

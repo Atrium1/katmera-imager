@@ -8,7 +8,10 @@
  */
 
 
-/* Repository URL — Katmera Repository JSON V4 catalog */
+/* Repository URL — future hosted Katmera Repository JSON V4 catalog.
+ * Until downloads.katmera.com is live, run with:
+ *   katmera-imager --repo /path/to/katmera/catalog/os_list_v4.json
+ */
 #define OSLIST_URL                              "https://downloads.katmera.com/imager/os_list_v4.json"
 
 /* Custom repository manifest file extension (without leading dot) */

@@ -26,17 +26,12 @@ jobs:
 
           Based on Raspberry Pi Imager **v2.0.11.1** (Apache-2.0). See \`katmera/NOTICE\`.
 
-          ### Phase 1 scope
+          ### Phase 1 foundation
           - microSD flashing for Nexus Hub + OctaPower 3566 AI / Omnicore 1126B
-          - Private images via download token → signed CDN URLs
+          - Catalog stubs until BSP images publish — test with **Use custom**
+          - Private unlock / signed URLs: M3 (not in this build)
+          - Artifacts may be **unsigned** until M6
 
-          ### Artifacts
-          Attach platform installers built per \`katmera/docs/RELEASE.md\`:
-          - \`Katmera-Imager-Setup-*.exe\`
-          - \`Katmera-Imager-*.dmg\`
-          - \`katmera-imager_*_amd64.deb\`
-
-          ### Unlock
-          App Options → Download token (see \`katmera/docs/DOWNLOAD_API.md\`).
+          See \`katmera/docs/BUILD.md\` and \`katmera/docs/FOLLOWUPS.md\`.
           EOF
           )"

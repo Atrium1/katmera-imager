@@ -75,8 +75,7 @@ BaseDialog {
                 items.push(secureBootKeyButton.focusItem)
             items.push(chkConnectOrg.focusItem)
             items.push(clearSettingsButton.focusItem)
-            items.push(fieldDownloadToken)
-            // Telemetry pill is hidden in Katmera builds but kept for ABI/settings compatibility.
+            // Telemetry pill is hidden in Katmera builds but kept for settings compatibility.
             if (chkTelemetry.visible) {
                 items.push(chkTelemetry.focusItem)
                 if (chkTelemetry.helpLinkItem && chkTelemetry.helpLinkItem.visible)
@@ -281,37 +280,9 @@ BaseDialog {
                 }
             }
 
-            ColumnLayout {
-                id: downloadTokenRow
-                Layout.fillWidth: true
-                spacing: Style.spacingSmall
-
-                Text {
-                    Layout.fillWidth: true
-                    text: qsTr("Download token")
-                    font.pointSize: Style.fontSizeFormLabel
-                    font.family: Style.fontFamily
-                    color: Style.formLabelColor
-                }
-                Text {
-                    Layout.fillWidth: true
-                    wrapMode: Text.WordWrap
-                    font.pointSize: Style.fontSizeCaption
-                    font.family: Style.fontFamily
-                    color: Style.textDescriptionColor
-                    text: qsTr("Enter the post-purchase download token to unlock private Katmera BSP images. The catalog is requested with ?token=… and returns signed download URLs.")
-                }
-                ImTextField {
-                    id: fieldDownloadToken
-                    Layout.fillWidth: true
-                    echoMode: TextInput.Password
-                    placeholderText: qsTr("Order / download token")
-                    font.pointSize: Style.fontSizeInput
-                    activeFocusOnTab: true
-                    Accessible.name: qsTr("Download token")
-                    Accessible.description: qsTr("Post-purchase token used to unlock private image downloads")
-                }
-            }
+            // M3 hook (not implemented): post-purchase download token → personalized
+            // catalog with signed CDN image URLs. See katmera/docs/DOWNLOAD_API.md.
+            // Do not add App Options UI for tokens until real BSP images + unlock API exist.
         }
     }
 
@@ -422,7 +393,6 @@ BaseDialog {
         chkBeep.checked = ImageWriterSingleton.getBoolSetting("beep") && ImageWriterSingleton.isBeepAvailable();
         chkEject.checked = ImageWriterSingleton.getBoolSetting("eject");
         chkTelemetry.checked = ImageWriterSingleton.getBoolSetting("telemetry");
-        fieldDownloadToken.text = ImageWriterSingleton.getStringSetting("downloadToken");
         // Do not load from QSettings; keep ephemeral
         chkDisableWarnings.checked = popup.wizardContainer ? popup.wizardContainer.disableWarnings : false;
         // Load secure boot RSA key path
@@ -470,20 +440,6 @@ BaseDialog {
         ImageWriterSingleton.setSetting("beep", chkBeep.checked && ImageWriterSingleton.isBeepAvailable());
         ImageWriterSingleton.setSetting("eject", chkEject.checked);
         ImageWriterSingleton.setSetting("telemetry", chkTelemetry.checked);
-        var previousToken = ImageWriterSingleton.getStringSetting("downloadToken");
-        var newToken = fieldDownloadToken.value !== undefined ? fieldDownloadToken.value : fieldDownloadToken.text;
-        newToken = (newToken || "").trim();
-        ImageWriterSingleton.setSetting("downloadToken", newToken);
-        if (previousToken !== newToken) {
-            // Re-fetch catalog so signed image URLs match the new token
-            if (ImageWriterSingleton.customRepo()) {
-                ImageWriterSingleton.refreshOsListFrom(ImageWriterSingleton.osListUrlForDisplay())
-            } else {
-                ImageWriterSingleton.refreshOsListFromDefaultUrl()
-            }
-            if (popup.wizardContainer)
-                popup.wizardContainer.resetWizard()
-        }
         ImageWriterSingleton.setSetting("secureboot_rsa_key", rsaKeyPath.text);
         // Feature flag only — the stored organisation API key is
         // kept across toggles.  Use the Clear action on the Connect

@@ -315,7 +315,7 @@ BaseDialog {
         }
     }
 
-    // Version display - only shown when window has no decorations (no title bar)
+    // Version / attribution — always visible so Apache-2.0 upstream credit is shown
     Text {
         id: versionText
         text: qsTr("Version: %1 — based on Raspberry Pi Imager (Apache-2.0)").arg(ImageWriterSingleton.constantVersion())
@@ -324,7 +324,7 @@ BaseDialog {
         color: Style.textDescriptionColor
         Layout.fillWidth: true
         horizontalAlignment: Text.AlignHCenter
-        visible: !ImageWriterSingleton.hasWindowDecorations()
+        visible: true
         Layout.bottomMargin: Style.spacingSmall
     }
 

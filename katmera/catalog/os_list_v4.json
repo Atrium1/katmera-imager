@@ -1,0 +1,50 @@
+{
+  "imager": {
+    "latest_version": "1.0.0",
+    "url": "https://katmera.com/software/imager",
+    "devices": [
+      {
+        "name": "Nexus Hub + OctaPower 3566 AI",
+        "tags": ["nexus-hub-octapower-3566-ai"],
+        "icon": "https://downloads.katmera.com/imager/icons/nexus-hub-octapower-3566-ai.png",
+        "description": "nexus-hub + octapower-3566-ai"
+      },
+      {
+        "name": "Nexus Hub + Omnicore 1126B",
+        "tags": ["nexus-hub-omnicore-1126b"],
+        "icon": "https://downloads.katmera.com/imager/icons/nexus-hub-omnicore-1126b.png",
+        "description": "nexus-hub + omnicore-1126b"
+      }
+    ]
+  },
+  "os_list": [
+    {
+      "name": "Katmera Linux (Hub + OctaPower 3566 AI)",
+      "description": "BSP image for Nexus Hub with OctaPower 3566 AI. Post-purchase download — unlock with your download token.",
+      "icon": "https://downloads.katmera.com/imager/icons/katmera-linux.png",
+      "url": "https://downloads.katmera.com/imager/images/nexus-hub-octapower-3566-ai/latest.img.xz",
+      "extract_size": 1,
+      "extract_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "image_download_size": 1,
+      "image_download_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": ["nexus-hub-octapower-3566-ai"],
+      "website": "https://wiki.katmera.com/"
+    },
+    {
+      "name": "Katmera Linux (Hub + Omnicore 1126B)",
+      "description": "BSP image for Nexus Hub with Omnicore 1126B. Post-purchase download — unlock with your download token.",
+      "icon": "https://downloads.katmera.com/imager/icons/katmera-linux.png",
+      "url": "https://downloads.katmera.com/imager/images/nexus-hub-omnicore-1126b/latest.img.xz",
+      "extract_size": 1,
+      "extract_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "image_download_size": 1,
+      "image_download_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": ["nexus-hub-omnicore-1126b"],
+      "website": "https://wiki.katmera.com/"
+    }
+  ]
+}

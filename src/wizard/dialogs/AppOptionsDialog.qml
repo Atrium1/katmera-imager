@@ -52,9 +52,9 @@ BaseDialog {
         chkEject.naturalWidth,
         chkTelemetry.naturalWidth,
         chkDisableWarnings.naturalWidth,
-        chkConnectOrg.naturalWidth,
         editRepoButton.naturalWidth,
-        clearSettingsButton.naturalWidth
+        clearSettingsButton.naturalWidth,
+        downloadTokenField.implicitWidth
     ) + Style.cardPadding * 4  // Double padding: contentLayout + optionsLayout margins
     
     // Register focus groups when component is ready
@@ -70,10 +70,14 @@ BaseDialog {
         registerFocusGroup("options", function(){
             var items = [chkBeep.focusItem, chkEject.focusItem,
                          chkDisableWarnings.focusItem, editRepoButton.focusItem]
-            // Only include secure boot key button if visible
+            // Only include secure boot key button if visible (capability-gated)
             if (secureBootKeyButton.visible)
                 items.push(secureBootKeyButton.focusItem)
-            items.push(chkConnectOrg.focusItem)
+            // Pi Connect for Organisations is hidden in Katmera builds
+            if (chkConnectOrg.visible)
+                items.push(chkConnectOrg.focusItem)
+            if (downloadTokenField.visible)
+                items.push(downloadTokenField.textField)
             items.push(clearSettingsButton.focusItem)
             // Telemetry pill is hidden in Katmera builds but kept for settings compatibility.
             if (chkTelemetry.visible) {
@@ -232,6 +236,8 @@ BaseDialog {
                 }
             }
 
+            // Raspberry Pi Connect for Organisations — hidden for Katmera Hub
+            // builds (capability-gated; keep QML for upstream parity / future use).
             ImOptionPill {
                 id: chkConnectOrg
                 text: qsTr("Raspberry Pi Connect for Organisations")
@@ -239,8 +245,44 @@ BaseDialog {
                 helpLabel: ImageWriterSingleton.isEmbeddedMode() ? "" : qsTr("What is this?")
                 helpUrl: ImageWriterSingleton.isEmbeddedMode() ? "" : "https://www.raspberrypi.com/software/connect/"
                 Layout.fillWidth: true
+                visible: false
                 Component.onCompleted: {
                     focusItem.activeFocusOnTab = true
+                }
+            }
+
+            // M3: post-purchase download token → personalized catalog with signed CDN URLs.
+            // See katmera/docs/DOWNLOAD_API.md. Backend unlock API is external.
+            ColumnLayout {
+                id: downloadTokenSection
+                Layout.fillWidth: true
+                spacing: Style.spacingXSmall
+
+                Text {
+                    text: qsTr("Download token")
+                    font.pointSize: Style.fontSizeFormLabel
+                    font.family: Style.fontFamily
+                    color: Style.formLabelColor
+                    Layout.fillWidth: true
+                }
+
+                ImPasswordField {
+                    id: downloadTokenField
+                    Layout.fillWidth: true
+                    placeholderText: qsTr("Optional — unlocks private OS catalog")
+                    Accessible.name: qsTr("Download token")
+                    Accessible.description: qsTr("Post-purchase token appended as ?token= when fetching the OS catalog. Leave blank for the public stub catalog.")
+                }
+
+                Text {
+                    id: downloadTokenHint
+                    text: ImageWriterSingleton.osListError
+                    visible: text && text.length > 0
+                    wrapMode: Text.WordWrap
+                    font.pointSize: Style.fontSizeCaption
+                    font.family: Style.fontFamily
+                    color: Style.formLabelErrorColor
+                    Layout.fillWidth: true
                 }
             }
 
@@ -279,10 +321,6 @@ BaseDialog {
                     focusItem.activeFocusOnTab = true
                 }
             }
-
-            // M3 hook (not implemented): post-purchase download token → personalized
-            // catalog with signed CDN image URLs. See katmera/docs/DOWNLOAD_API.md.
-            // Do not add App Options UI for tokens until real BSP images + unlock API exist.
         }
     }
 
@@ -426,10 +464,10 @@ BaseDialog {
                    ImageWriterSingleton.getDebugForceSecureBoot();
         });
         // Raspberry Pi Connect for Organisations is a persisted
-        // feature flag.  The API key itself lives in the wizard's
-        // Connect step (session-only) so it is never written to
-        // disk.
+        // feature flag (UI hidden in Katmera builds).  The API key
+        // itself lives in the wizard's Connect step (session-only).
         chkConnectOrg.checked = ImageWriterSingleton.getBoolSetting("connect_org_enabled");
+        downloadTokenField.text = ImageWriterSingleton.getStringSetting("download_token");
 
         initialized = true;
         // Clear initialization flag
@@ -457,6 +495,15 @@ BaseDialog {
         // kept across toggles.  Use the Clear action on the Connect
         // wizard step to remove the saved key.
         ImageWriterSingleton.setSetting("connect_org_enabled", chkConnectOrg.checked);
+
+        var previousToken = ImageWriterSingleton.getStringSetting("download_token");
+        var newToken = downloadTokenField.value.trim();
+        ImageWriterSingleton.setSetting("download_token", newToken);
+        // Refresh catalog when token changes so ?token= takes effect (or clears).
+        if (previousToken !== newToken && !ImageWriterSingleton.customRepo()) {
+            ImageWriterSingleton.refreshOsListFromDefaultUrl();
+        }
+
         // Do not persist disable_warnings; set ephemeral flag only
         if (popup.wizardContainer)
             popup.wizardContainer.disableWarnings = chkDisableWarnings.checked;

@@ -6,14 +6,26 @@
       {
         "name": "Nexus Hub + OctaPower 3566 AI",
         "tags": ["nexus-hub-octapower-3566-ai"],
-        "icon": "icons/katmera-mark.png",
+        "icon": "icons/device_nexus_hub.png",
         "description": "Catalog slugs: nexus-hub + octapower-3566-ai"
       },
       {
         "name": "Nexus Hub + Omnicore 1126B",
         "tags": ["nexus-hub-omnicore-1126b"],
-        "icon": "icons/katmera-mark.png",
+        "icon": "icons/device_nexus_hub.png",
         "description": "Catalog slugs: nexus-hub + omnicore-1126b"
+      },
+      {
+        "name": "Nexus Base + OctaPower 3566 AI",
+        "tags": ["nexus-base-octapower-3566-ai"],
+        "icon": "icons/device_nexus_base.png",
+        "description": "Catalog slugs: nexus-base + octapower-3566-ai"
+      },
+      {
+        "name": "Nexus Base + Omnicore 1126B",
+        "tags": ["nexus-base-omnicore-1126b"],
+        "icon": "icons/device_nexus_base.png",
+        "description": "Catalog slugs: nexus-base + omnicore-1126b"
       }
     ]
   },
@@ -21,7 +33,7 @@
     {
       "name": "Katmera Linux (Hub + OctaPower 3566 AI)",
       "description": "Image not published yet. BSP .img files are not available in this milestone. Use \"Use custom\" to flash a local .img or .img.xz and test the microSD write path.",
-      "icon": "icons/katmera-mark.png",
+      "icon": "icons/device_nexus_hub.png",
       "website": "https://wiki.katmera.com/",
       "release_date": "2026-10-01",
       "init_format": "none",
@@ -30,11 +42,29 @@
     {
       "name": "Katmera Linux (Hub + Omnicore 1126B)",
       "description": "Image not published yet. BSP .img files are not available in this milestone. Use \"Use custom\" to flash a local .img or .img.xz and test the microSD write path.",
-      "icon": "icons/katmera-mark.png",
+      "icon": "icons/device_nexus_hub.png",
       "website": "https://wiki.katmera.com/",
       "release_date": "2026-10-01",
       "init_format": "none",
       "devices": ["nexus-hub-omnicore-1126b"]
+    },
+    {
+      "name": "Katmera Linux (Base + OctaPower 3566 AI)",
+      "description": "Image not published yet. BSP .img files are not available in this milestone. Use \"Use custom\" to flash a local .img or .img.xz and test the microSD write path.",
+      "icon": "icons/device_nexus_base.png",
+      "website": "https://wiki.katmera.com/",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": ["nexus-base-octapower-3566-ai"]
+    },
+    {
+      "name": "Katmera Linux (Base + Omnicore 1126B)",
+      "description": "Image not published yet. BSP .img files are not available in this milestone. Use \"Use custom\" to flash a local .img or .img.xz and test the microSD write path.",
+      "icon": "icons/device_nexus_base.png",
+      "website": "https://wiki.katmera.com/",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": ["nexus-base-omnicore-1126b"]
     }
   ]
 }

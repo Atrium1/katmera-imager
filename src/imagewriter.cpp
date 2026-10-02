@@ -1965,14 +1965,24 @@ QString ImageWriter::osListUrlForDisplay() const {
 
 /* Function to return current OS list URL (may be customized).
  *
- * M3 hook (not implemented): when a post-purchase download token is stored,
- * append ?token= so the unlock API can return a V4 catalog with short-lived
- * signed CDN image URLs. See katmera/docs/DOWNLOAD_API.md.
- * Phase 1 foundation uses public/stub catalog + "Use custom" for SD testing.
+ * M3: when a post-purchase download token is stored in settings
+ * ("download_token"), append ?token= so the unlock API can return a V4
+ * catalog with short-lived signed CDN image URLs. See katmera/docs/DOWNLOAD_API.md.
+ * Display URL (osListUrlForDisplay) intentionally omits the token.
  */
 QUrl ImageWriter::osListUrl() const
 {
-    return _repo;
+    QUrl url = _repo;
+    if (!url.isLocalFile() && (url.scheme() == QLatin1String("http") || url.scheme() == QLatin1String("https"))) {
+        const QString token = _settings.value(QStringLiteral("download_token")).toString().trimmed();
+        if (!token.isEmpty()) {
+            QUrlQuery query(url.query(QUrl::FullyDecoded));
+            query.removeAllQueryItems(QStringLiteral("token"));
+            query.addQueryItem(QStringLiteral("token"), token);
+            url.setQuery(query);
+        }
+    }
+    return url;
 }
 
 /* Static version - for use without creating an instance */
@@ -2186,6 +2196,12 @@ void ImageWriter::onOsListFetchComplete(const QByteArray &data, const QUrl &url,
         //         As these will be fixed up as the subitems_url instances are blinked in
         bool wasEmpty = _completeOsList.isEmpty();
         
+        // Clear any previous catalog auth / fetch error on success
+        if (!_osListError.isEmpty()) {
+            _osListError.clear();
+            emit osListErrorChanged();
+        }
+
         // Stop network monitoring on any successful fetch (initial or refresh)
         // This handles both the startup case and the "refresh failed, now succeeded" case
         PlatformQuirks::stopNetworkMonitoring();
@@ -2252,6 +2268,19 @@ void ImageWriter::onOsListFetchError(const QString &errorMessage, const QUrl &ur
     }
 
     qDebug() << "Failed to fetch URL [" << url << "]:" << errorMessage;
+
+    // M3: surface invalid/expired download token clearly (CurlFetcher uses "HTTP NNN: …")
+    if (isTopLevelRequest) {
+        const bool authFailed = errorMessage.contains(QLatin1String("HTTP 401"))
+            || errorMessage.contains(QLatin1String("HTTP 403"));
+        if (authFailed) {
+            _osListError = tr("Download token is invalid or expired. Update it in App Options and try again.");
+            emit osListErrorChanged();
+        } else if (!_osListError.isEmpty()) {
+            _osListError.clear();
+            emit osListErrorChanged();
+        }
+    }
 
     // If the top-level OS list fetch fails with a connection error and we haven't
     // tried IPv4-only yet, retry with IPv4-only mode. This handles Windows 11 systems

@@ -1,0 +1,106 @@
+{
+  "imager": {
+    "latest_version": "0.1.0-dev",
+    "url": "https://github.com/Atrium1/katmera-imager",
+    "devices": [
+      {
+        "name": "Nexus Hub + OctaPower 3566 AI",
+        "tags": [
+          "nexus-hub-octapower-3566-ai"
+        ],
+        "icon": "icons/device_nexus_hub.png",
+        "description": "Catalog slugs: nexus-hub + octapower-3566-ai"
+      },
+      {
+        "name": "Nexus Hub + Omnicore 1126B",
+        "tags": [
+          "nexus-hub-omnicore-1126b"
+        ],
+        "icon": "icons/device_nexus_hub.png",
+        "description": "Catalog slugs: nexus-hub + omnicore-1126b"
+      },
+      {
+        "name": "Nexus Base + OctaPower 3566 AI",
+        "tags": [
+          "nexus-base-octapower-3566-ai"
+        ],
+        "icon": "icons/device_nexus_base.png",
+        "description": "Catalog slugs: nexus-base + octapower-3566-ai"
+      },
+      {
+        "name": "Nexus Base + Omnicore 1126B",
+        "tags": [
+          "nexus-base-omnicore-1126b"
+        ],
+        "icon": "icons/device_nexus_base.png",
+        "description": "Catalog slugs: nexus-base + omnicore-1126b"
+      }
+    ]
+  },
+  "os_list": [
+    {
+      "name": "Katmera Linux (Hub + OctaPower 3566 AI) [unlocked example]",
+      "description": "Mock unlocked entry with placeholder signed URL. Replace with real BSP fields before production. Use only for UI/download-path testing.",
+      "icon": "icons/device_nexus_hub.png",
+      "website": "https://wiki.katmera.com/",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": [
+        "nexus-hub-octapower-3566-ai"
+      ],
+      "url": "https://downloads.katmera.com/imager/images/placeholder-hub-3566-ai.img.xz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=14400&X-Amz-Signature=PLACEHOLDER",
+      "extract_size": 1,
+      "extract_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "image_download_size": 1,
+      "image_download_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "name": "Katmera Linux (Hub + Omnicore 1126B) [unlocked example]",
+      "description": "Mock unlocked entry with placeholder signed URL. Replace with real BSP fields before production. Use only for UI/download-path testing.",
+      "icon": "icons/device_nexus_hub.png",
+      "website": "https://wiki.katmera.com/",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": [
+        "nexus-hub-omnicore-1126b"
+      ],
+      "url": "https://downloads.katmera.com/imager/images/placeholder-hub-1126b.img.xz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=14400&X-Amz-Signature=PLACEHOLDER",
+      "extract_size": 1,
+      "extract_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "image_download_size": 1,
+      "image_download_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "name": "Katmera Linux (Base + OctaPower 3566 AI) [unlocked example]",
+      "description": "Mock unlocked entry with placeholder signed URL. Replace with real BSP fields before production. Use only for UI/download-path testing.",
+      "icon": "icons/device_nexus_base.png",
+      "website": "https://wiki.katmera.com/",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": [
+        "nexus-base-octapower-3566-ai"
+      ],
+      "url": "https://downloads.katmera.com/imager/images/placeholder-base-3566-ai.img.xz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=14400&X-Amz-Signature=PLACEHOLDER",
+      "extract_size": 1,
+      "extract_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "image_download_size": 1,
+      "image_download_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "name": "Katmera Linux (Base + Omnicore 1126B) [unlocked example]",
+      "description": "Mock unlocked entry with placeholder signed URL. Replace with real BSP fields before production. Use only for UI/download-path testing.",
+      "icon": "icons/device_nexus_base.png",
+      "website": "https://wiki.katmera.com/",
+      "release_date": "2026-10-01",
+      "init_format": "none",
+      "devices": [
+        "nexus-base-omnicore-1126b"
+      ],
+      "url": "https://downloads.katmera.com/imager/images/placeholder-base-1126b.img.xz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=14400&X-Amz-Signature=PLACEHOLDER",
+      "extract_size": 1,
+      "extract_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "image_download_size": 1,
+      "image_download_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}

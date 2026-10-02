@@ -41,7 +41,40 @@ jobs:
           test -f katmera/NOTICE
           test -f katmera/docs/DOWNLOAD_API.md
           test -f katmera/docs/PHASE2.md
+          test -f katmera/docs/CATALOG_PUBLISH.md
+          test -f katmera/docs/BUILD.md
+          test -f katmera/docs/RELEASE.md
+          test -f katmera/docs/SIGNING.md
           echo "ok: rebrand + overlay sanity"
+
+  packaging-stub:
+    name: Unsigned packaging contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print unsigned + signed packaging expectations
+        run: |
+          cat <<'EOF'
+          === Priority 2 — unsigned (no Qt runner required yet) ===
+          Common flags:
+            cmake -S src -B build -DCMAKE_BUILD_TYPE=MinSizeRel -DENABLE_TELEMETRY=OFF -DQt6_ROOT=...
+          Artifacts:
+            Windows: Katmera-Imager-<ver>-windows-unsigned.zip  (exe + windeployqt)
+            macOS:   Katmera-Imager-<ver>-macos-unsigned.zip    (.app, ad-hoc codesign -)
+            Linux:   katmera-imager-<ver>-linux-x86_64-unsigned.tar.gz  or unsigned .deb
+
+          === Priority 5 / M6 — signed (requires secrets on builders) ===
+          Windows: -DENABLE_INNO_INSTALLER=ON -DIMAGER_SIGNED_APP=ON
+                   → Katmera-Imager-Setup-<ver>.exe + Authenticode
+          macOS:   -DIMAGER_SIGNED_APP=ON -DIMAGER_SIGNING_IDENTITY=... -DIMAGER_NOTARIZE_APP=ON
+                   → Katmera-Imager-<ver>.dmg (Developer ID + notarization)
+          Linux:   debian/ pipeline → katmera-imager_<ver>_amd64.deb
+          Publish SHA256SUMS on GitHub Releases.
+
+          Secrets (when provisioned): WINDOWS_CERT_PFX, WINDOWS_CERT_PASSWORD,
+            APPLE_DEVELOPER_ID_CERT / keychain profile, APPLE_NOTARY_PROFILE.
+          See katmera/docs/BUILD.md and katmera/docs/RELEASE.md
+          EOF
 
   release-notes:
     name: Release checklist
@@ -53,10 +86,10 @@ jobs:
         run: |
           cat <<'EOF'
           Tag-triggered packaging (run on signed builders):
-            Windows: cmake -S src -B build -DENABLE_INNO_INSTALLER=ON -DENABLE_TELEMETRY=OFF
+            Windows: cmake -S src -B build -DENABLE_INNO_INSTALLER=ON -DIMAGER_SIGNED_APP=ON -DENABLE_TELEMETRY=OFF
                      → Katmera-Imager-Setup-<ver>.exe
             macOS:   cmake -S src -B build -DIMAGER_SIGNED_APP=ON -DENABLE_TELEMETRY=OFF
                      → Katmera-Imager-<ver>.dmg
             Linux:   produce katmera-imager_<ver>_amd64.deb via debian/ pipeline
-          See katmera/docs/RELEASE.md
+          Attach SHA256SUMS. See katmera/docs/RELEASE.md
           EOF

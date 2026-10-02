@@ -26,12 +26,30 @@ jobs:
 
           Based on Raspberry Pi Imager **v2.0.11.1** (Apache-2.0). See \`katmera/NOTICE\`.
 
-          ### Phase 1 foundation
+          ### Contents
           - microSD flashing for Nexus Hub + OctaPower 3566 AI / Omnicore 1126B
-          - Catalog stubs until BSP images publish — test with **Use custom**
-          - Private unlock / signed URLs: M3 (not in this build)
-          - Artifacts may be **unsigned** until M6
+          - Default catalog: \`https://downloads.katmera.com/imager/os_list_v4.json\`
+          - M3 download token (App Options) when unlock API is live
+          - Attach **signed** installers when M6 secrets are configured; otherwise label artifacts **unsigned**
 
-          See \`katmera/docs/BUILD.md\` and \`katmera/docs/FOLLOWUPS.md\`.
+          ### Expected artifacts (M6)
+          | Platform | File |
+          |----------|------|
+          | Windows | \`Katmera-Imager-Setup-${VER#v}.exe\` (Authenticode) |
+          | macOS | \`Katmera-Imager-${VER#v}.dmg\` (Developer ID + notarized) |
+          | Linux | \`katmera-imager_${VER#v}_amd64.deb\` |
+          | Checksums | \`SHA256SUMS\` |
+
+          ### Build flags (signed builders)
+          \`\`\`
+          Windows: -DENABLE_INNO_INSTALLER=ON -DIMAGER_SIGNED_APP=ON -DENABLE_TELEMETRY=OFF
+          macOS:   -DIMAGER_SIGNED_APP=ON -DIMAGER_SIGNING_IDENTITY=… -DIMAGER_NOTARIZE_APP=ON -DENABLE_TELEMETRY=OFF
+          Linux:   debian/ pipeline
+          \`\`\`
+
+          Secrets (when available): \`WINDOWS_CERT_PFX\`, \`WINDOWS_CERT_PASSWORD\`,
+          Apple Developer ID / notary profile. See \`katmera/docs/RELEASE.md\`.
+
+          Lab unsigned builds: \`katmera/docs/BUILD.md\`.
           EOF
           )"

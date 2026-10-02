@@ -125,7 +125,9 @@ WizardStepBase {
                 }
                 
                 Text {
-                    text: qsTr("The device list could not be downloaded. Please check your internet connection and try again.\n\nYou can still write a local image file by pressing Next and selecting 'Use custom' on the following screen.")
+                    text: ImageWriterSingleton.osListError.length > 0
+                        ? ImageWriterSingleton.osListError
+                        : qsTr("The device list could not be downloaded. Please check your internet connection and try again.\n\nYou can still write a local image file by pressing Next and selecting 'Use custom' on the following screen.")
                     font.pointSize: Style.fontSizeDescription
                     font.family: Style.fontFamily
                     color: Style.textDescriptionColor
@@ -297,12 +299,12 @@ WizardStepBase {
                     anchors.bottomMargin: Style.spacingMedium
                     spacing: Style.spacingMedium
                     
-                    // Hardware Icon
+                    // Hardware Icon — product photos need a bit more room than glyph icons
                     Image {
                         id: hwicon
                         source: hwitem.icon || ""
-                        Layout.preferredWidth: 40
-                        Layout.preferredHeight: 40
+                        Layout.preferredWidth: 64
+                        Layout.preferredHeight: 64
                         fillMode: Image.PreserveAspectFit
                         smooth: true
                         mipmap: true

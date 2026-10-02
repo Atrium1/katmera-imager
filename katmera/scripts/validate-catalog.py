@@ -13,6 +13,8 @@ SCHEMA = ROOT / "doc" / "json-schema" / "os-list-schema.json"
 PHASE1_TAGS = {
     "nexus-hub-octapower-3566-ai",
     "nexus-hub-omnicore-1126b",
+    "nexus-base-octapower-3566-ai",
+    "nexus-base-omnicore-1126b",
 }
 
 # Stub OS entries (images not published yet) may omit download URL fields.

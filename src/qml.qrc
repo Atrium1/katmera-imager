@@ -44,6 +44,14 @@
         <file>icons/katmera-mark-64.png</file>
         <file>icons/katmera-mark-128.png</file>
         <file>icons/katmera-mark-256.png</file>
+        <file>icons/device_nexus_hub.png</file>
+        <file>icons/device_nexus_hub-64.png</file>
+        <file>icons/device_nexus_hub-128.png</file>
+        <file>icons/device_nexus_hub-256.png</file>
+        <file>icons/device_nexus_base.png</file>
+        <file>icons/device_nexus_base-64.png</file>
+        <file>icons/device_nexus_base-128.png</file>
+        <file>icons/device_nexus_base-256.png</file>
         <file>icons/cat_digital_signage.png</file>
         <file>qmlcomponents/ImOptionPill.qml</file>
         <file>qmlcomponents/ImTextField.qml</file>

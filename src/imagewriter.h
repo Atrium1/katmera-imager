@@ -89,6 +89,7 @@ public:
 
     Q_PROPERTY(WriteState writeState READ writeState NOTIFY writeStateChanged)
     Q_PROPERTY(bool isOsListUnavailable READ isOsListUnavailable NOTIFY osListUnavailableChanged)
+    Q_PROPERTY(QString osListError READ osListError NOTIFY osListErrorChanged)
     Q_PROPERTY(bool screenReaderActive READ isScreenReaderActive NOTIFY screenReaderActiveChanged)
 
     /* Returns true if the extract size is reliably known (false for gz files which can't store sizes >4GB) */
@@ -448,6 +449,7 @@ public:
 
     /* Check if OS list is unavailable - derived from whether we have data (for QML offline UI) */
     bool isOsListUnavailable() const { return _completeOsList.isEmpty(); }
+    QString osListError() const { return _osListError; }
 
     /* Get access to performance stats for instrumentation */
     PerformanceStats* performanceStats() { return _performanceStats; }
@@ -485,6 +487,7 @@ signals:
     void customRepoHostChanged();  // Emitted when displayed repo host changes (e.g., after redirect)
     void cacheStatusChanged();
     void osListUnavailableChanged();
+    void osListErrorChanged();
     void permissionWarning(QVariant msg);
     void locationPermissionGranted();
     void performanceSaveDialogNeeded(const QString &suggestedFilename, const QString &initialDir);
@@ -566,6 +569,7 @@ protected:
     DownloadThread *_thread;
     bool _verifyEnabled, _multipleFilesInZip, _online, _extractSizeKnown;
     QSettings _settings;
+    QString _osListError;
     QMap<QString,QString> _translations;
     QTranslator *_trans;
     int _refreshIntervalOverrideMinutes;

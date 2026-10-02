@@ -306,7 +306,7 @@ BaseDialog {
             ImOptionPill {
                 id: chkRpiboot
                 text: qsTr("Enable Rpiboot/Fastboot Support")
-                accessibleDescription: qsTr("Scan for Raspberry Pi devices in USB boot mode (rpiboot). Requires libusb.")
+                accessibleDescription: qsTr("Scan for USB boot-mode devices (rpiboot) (rpiboot). Requires libusb.")
                 Layout.fillWidth: true
                 Component.onCompleted: {
                     focusItem.activeFocusOnTab = true

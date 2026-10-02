@@ -509,7 +509,7 @@ BaseDialog {
             font.family: Style.fontFamily
             color: Style.textDescriptionColor
             Layout.fillWidth: true
-            text: qsTr("If you disable warnings, Raspberry Pi Imager will <b>not show confirmation prompts before writing images</b>. You will still be required to <b>type the exact name</b> when selecting a system drive.")
+            text: qsTr("If you disable warnings, Katmera Imager will <b>not show confirmation prompts before writing images</b>. You will still be required to <b>type the exact name</b> when selecting a system drive.")
             Accessible.name: text.replace(/<[^>]+>/g, '')  // Strip HTML tags for accessibility
         }
 

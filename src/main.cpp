@@ -137,10 +137,10 @@ int main(int argc, char *argv[])
             g_logFile = fopen(logPath, "a");
             if (g_logFile) {
 #ifdef Q_OS_UNIX
-                fprintf(g_logFile, "\n=== Raspberry Pi Imager started (PID %d, EUID %d) ===\n",
+                fprintf(g_logFile, "\n=== Katmera Imager started (PID %d, EUID %d) ===\n",
                         getpid(), geteuid());
 #else
-                fprintf(g_logFile, "\n=== Raspberry Pi Imager started ===\n");
+                fprintf(g_logFile, "\n=== Katmera Imager started ===\n");
 #endif
                 fflush(g_logFile);
                 qInstallMessageHandler(fileLogHandler);
@@ -334,7 +334,7 @@ int main(int argc, char *argv[])
     int cliRefreshJitter = -1;
 
     QCommandLineParser parser;
-    parser.setApplicationDescription("Raspberry Pi Imager GUI");
+    parser.setApplicationDescription("Katmera Imager GUI");
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addOptions({
@@ -766,7 +766,7 @@ int main(int argc, char *argv[])
     if (hasPermissionIssue)
     {
         // Common message parts to reduce translation effort
-        QString header = QObject::tr("Raspberry Pi Imager requires elevated privileges to write to storage devices.");
+        QString header = QObject::tr("Katmera Imager requires elevated privileges to write to storage devices.");
         QString footer = QObject::tr("Without this, you will encounter permission errors when writing images.");
         QString statusAndAction = {};
 
